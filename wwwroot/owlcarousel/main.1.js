@@ -85,9 +85,8 @@
         nav: false,
         autoplay: true,
     });
-    //timer
 
-    //Custom
+    // Custom
     $('#owl-carousel-5').owlCarousel({
         items: 1,
         loop: true,
@@ -99,33 +98,6 @@
         autoplayTimeout: 6000,
         autoplayHoverPause: true,
         touchDrag: true,
-    });
-
-    $('#owl-carousel-6').owlCarousel({
-        loop: true,
-        margin: 10,
-        nav: true,
-        dots: false,
-        // navContainer: '#nav-carousel',
-        navText: ['<i class="fa fa-angle-left"></i>', '<i class="fa fa-angle-right"></i>'],
-        autoplay: true,
-        autoplayTimeout: 5000,
-        autoplayHoverPause: true,
-        touchDrag: true,
-        responsive: {
-            0: {
-                items: 1
-            },
-            768: {
-                items: 2
-            },
-            992: {
-                items: 3
-            },
-            1200: {
-                items: 4
-            }
-        }
     });
 
 })(jQuery);
