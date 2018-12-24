@@ -17,9 +17,9 @@
 	    $sqli = mysqli_query($connect, $sql);
         $get_name = mysqli_fetch_assoc($sqli);
         $uId = $get_name['id']; #Get users ID
-        $title = $get_name['title']; #Get users title
-        $user_main = $get_name['last_name']; #Get users last name
-        $Fname = $get_name['first_name']; #Get users first name
+        // $title = $get_name['title']; #Get users title
+        $user_main = $get_name['lname']; #Get users last name
+        $Fname = $get_name['fname']; #Get users first name
         $Ugender = $get_name['gender']; #Get Users gender
         $Uem = $get_name['email']; #Get users email
         $userE = $Uem; #Assign email to variable $userE
@@ -35,7 +35,7 @@
     }
 
 	//Select all from table `cart` where column `user` = 'Users email'
-    $cart_sql = "SELECT SUM(`count`) As Total from `cart` WHERE `user` = '$userE'";
+    $cart_sql = "SELECT SUM(`item_count`) As Total from `cart` WHERE `user_id` = '$uId'";
     $cart_sqli = mysqli_query($connect, $cart_sql);
     $get_count = mysqli_fetch_array($cart_sqli);
     //Count number of rows where users email repeated
@@ -46,7 +46,7 @@
     }
 
     //Select all from table `cart` where column `user` = 'Users email'
-    $wish_sql = "SELECT * FROM `wishlist` WHERE `user` = '$Uem'";
+    $wish_sql = "SELECT * FROM `wishlist` WHERE `user_id` = '$uId'";
     $wish_sqli = mysqli_query($connect, $wish_sql);
     //Count number of rows where users email repeated
     $nWish = mysqli_num_rows($wish_sqli);
@@ -57,56 +57,50 @@
 
 	<!--[ Meta, Title, Stylesheets & Scripts ]-->
 	<head>
+		<!-- Meta -->
 		<meta charset="utf-8" />
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<title>Nice</title>
-		<meta name="viewport" content="width=device-width, initial-scale=1, chrome=1">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0"> 
-        <meta name="description" content="Fullscreen Slit Slider with CSS3 and jQuery" />
-        <meta name="keywords" content="slit slider, plugin, css3, transitions, jquery, fullscreen, autoplay" />
-        <meta name="author" content="Codrops" />
-		<!-- Title Bar Icon -->
-		<link rel="icon" type="img/png" href="./img/icon.png">
-	
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, chrome=1" />
+		<meta name="description" content="Shop with style online on the best online shop in Calabar" />
+		<meta name="keywords" content="kal, ekal, e-kal, ecommerce, e-commerce, shop, online shop, shoes, electronics, fashion, food, drink, automobile" />
+		<meta name="author" content="SAMBOLT" />
 		
-		<!-- Icon CSS Link -->
+		<!-- Title Bar Text -->
+		<title>E-Kal</title>
+
+		<!-- Title Bar Icon -->
+		<link rel="icon" type="img/png" href="./wwwroot/img/favicon.png" />
+	
+		<!-- Icon CSS Link (Font Awesome) -->
 		<link rel="stylesheet" type="text/css" href="./wwwroot/css/fontawesome.min.css" />
 
-		<!-- Extra Styling -->
-		<!--<link rel="stylesheet" type="text/css" href="./css/w3.css" />-->
-		<link rel="stylesheet" type="text/css" href="./wwwroot/css/site.css" />
-		<link rel="stylesheet" type="text/css" href="./wwwroot/css/animate.css" />
-		<!-- <link rel="stylesheet" type="text/css" href="./css/sidenav.css" /> -->
-		
 		<!-- Bootstrap -->
 		<link rel="stylesheet" type="text/css" href="./wwwroot/bootstrap/css/bootstrap.min.css" />
-		
+
 		<!-- Owl Carousel -->
-		<!-- <link type="text/css" rel="stylesheet" href="./wwwroot/css/style.css" /> -->
-		<link rel="stylesheet" type="text/css" href ="./wwwroot/owlcarousel/assets/owl.carousel.css">
-		<link rel="stylesheet" type="text/css" href="./wwwroot/owlcarousel/assets/owl.carousel.min.css">
-		<link rel="stylesheet" type="text/css" href="./wwwroot/owlcarousel/assets/owl.theme.default.min.css">
+		<link rel="stylesheet" type="text/css" href="./wwwroot/owlcarousel/assets/style.css" />
+		<link rel="stylesheet" type="text/css" href="./wwwroot/owlcarousel/assets/owl.carousel.min.css" />
+		<link rel="stylesheet" type="text/css" href="./wwwroot/owlcarousel/assets/owl.theme.default.min.css" />
 
-		<!-- slider -->
-		<link rel="stylesheet" type="text/css" href="css/demo.css" />
-        <link rel="stylesheet" type="text/css" href="css/style.css" />
-        <link rel="stylesheet" type="text/css" href="css/custom.css" /> 
-
-		<!-- Slider Script -->
-		<script type="text/javascript" src="js/modernizr.custom.79639.js"></script>
+		<!-- Slider -->
+		<link rel="stylesheet" type="text/css" href="./wwwroot/slider/css/demo.css" />
+        <link rel="stylesheet" type="text/css" href="./wwwroot/slider/css/style.css" />
+        <link rel="stylesheet" type="text/css" href="./wwwroot/slider/css/custom.css" />
 		<noscript>
-			<link rel="stylesheet" type="text/css" href="css/styleNoJS.css" />
+			<link rel="stylesheet" type="text/css" href="./wwwroot/slider/css/styleNoJS.css" />
 		</noscript>
 
+		<!-- Extra Styling -->
+		<link rel="stylesheet" type="text/css" href="./wwwroot/css/site.css" />
+		<link rel="stylesheet" type="text/css" href="./wwwroot/css/animate.css" />
+		
 		<!-- JScripts -->
 		<script src="./wwwroot/jquery/popper.min.js"></script>
 		<script src="./wwwroot/jquery/jquery.min.js"></script>
-		<!-- <script src="./wwwroot/owlcarousel/jquery.min.js"></script> -->
-		
+		<script src="./wwwroot/owlcarousel/owl.carousel.min.js"></script>
 		<script src="./wwwroot/bootstrap/js/bootstrap.min.js"></script>
-		
-		
-
+		<script type="text/javascript" src="./wwwroot/slider/js/modernizr.custom.79639.js"></script>
 	</head>
 	
 	<header>
@@ -169,7 +163,7 @@
 					}
 
 					.fixed-top {
-						z-index: 98 !important
+						z-index: 2100 !important
 					}
 					
 					.nav1 {
@@ -200,9 +194,8 @@
 				<!-- ## Top nav for index page ## -->
 				<!-- Nav1; Top Nav-fixed: Toggler & Brand, Search Icon, User Icon, Ellipsis-v Menu --> 
 				<nav class="nav1 navbar navbar-expand navbar-light bg-light fixed-top" id="indexnavbar">
-					<h4 class="mt-3">
-						<a href="#" data-target="#sidebar" data-toggle="collapse" aria-expanded="false"><i class="fa fa-home"></i></a>
-						E-CAL
+					<h4 class="mt-auto navbar-brand">
+						<a href="index"><i class="fa fa-home"></i> E-KAL</a>
 					</h4>
 					<ul class="ml-auto navbar-nav justify-content-end">
 						<a href="javascript:void(0)" class="nav-link search-opennav" onclick="search_open()">
@@ -217,7 +210,7 @@
 							<a class="nav-link" href="#" id="navbardrop" data-toggle="dropdown">
 								<button class="btn btn-dark"><i class="fa fa-ellipsis-v"></i></button>
 							</a>
-							<div class="dropdown-menu dropdown-menu-right">
+							<div class="dropdown-menu dropdown-menu-right py-0">
 								<?php 
 									if($user == "Guest") {
 										?>
@@ -239,9 +232,9 @@
 												<?php
 											}
 										?>
-										<a class="dropdown-item p-3" href="wish"><i class="mr-3 fa fa-heart-o"></i> Saved</a><hr class="m-0 p-0" />
-										<a class="dropdown-item p-3" href="myaccount?page=main"><i class="mr-3 fa fa-user-o"></i> My Account</a><hr class="m-0 p-0" />
-										<a class="dropdown-item p-3" href="#"><i class="mr-3 fa fa-clock-o"></i> Recent Searches</a><hr class="m-0 p-0" />
+										<a class="dropdown-item p-3" href="wish"><i class="mr-3 far fa-heart"></i> Saved</a><hr class="m-0 p-0" />
+										<a class="dropdown-item p-3" href="myaccount?page=main"><i class="mr-3 far fa-user"></i> My Account</a><hr class="m-0 p-0" />
+										<a class="dropdown-item p-3" href="#"><i class="mr-3 far fa-clock"></i> Recent Searches</a><hr class="m-0 p-0" />
 										<a class="dropdown-item p-3" href="#"><i class="mr-3 fa fa-th-large"></i> Recently Viewed</a><hr class="m-0 p-0" />
 										<a class="dropdown-item p-2" href="#"><i class="ml-2 mr-3 fa fa-truck"></i> My Orders</a>
 										<?php
@@ -249,7 +242,7 @@
 									} elseif($user !== "Guest") {
 										?>
 										<a class="dropdown-item p-2" href="logout"><i class="ml-2 mr-3 fa fa-lock"></i> Sign Out</a><hr class="m-0 p-0" />
-										<a class="dropdown-item p-3" href="#"><i class="mr-3 fa fa-clock-o"></i> Recent Searches</a><hr class="m-0 p-0" />
+										<a class="dropdown-item p-3" href="#"><i class="mr-3 far fa-clock"></i> Recent Searches</a><hr class="m-0 p-0" />
 										<a class="dropdown-item p-3" href="#"><i class="mr-3 fa fa-th-large"></i> Recently Viewed</a><hr class="m-0 p-0" />
 										<a class="dropdown-item p-2" href="#"><i class="ml-2 mr-3 fa fa-truck"></i> My Orders</a>
 										<?php
@@ -268,32 +261,42 @@
 						<!-- Navbar links -->
 						<div class="container">
 							<div class="row">
-								<div class="nav-item text-center col-4">
+								<div class="nav-item text-center col px-2">
 									<a class="nav-link text-center" href="index">
 										<i class="fa fa-home"></i>
 										<br /> 
 										<span class="home">Home</span>
 									</a>
 								</div>
-								<div class="nav-item text-center col-4">
-									<a class="nav-link text-center" href="wish">
-										<i class="far fa-heart"></i> 
-										<span class="badge bg-danger"><?php echo $nWish; ?></span>
+								<div class="nav-item text-center col px-2">
+									<a class="nav-link text-center wish-text" href="wish">
+										
+										<?php if(($nWish) < 1) { ?>
+											<i id="fa" class="far fa-heart"></i>
+										<?php } ?>
+										
+										<?php if(($nWish) > 0) { ?>
+											<i id="fa" class="fa fa-heart"></i>
+										<?php } ?>
+										
+										<span class="badge bg-danger"><i><?php echo $nWish; ?></i></span>
 										<br /> 
 										<span class="saved">Saved</span>
 									</a>
 								</div>
-								<div class="nav-item text-center col-4">
-									<a class="nav-link text-center" href="cart">
-										<i class="fa fa-shopping-bag"></i> 
-										<span class="badge bg-danger"><?php echo $nCart; ?></span>
+								<div class="nav-item text-center col px-2">
+									<a class="nav-link text-center cart-text" href="cart">
+										<i class="fa fa-shopping-cart"></i> 
+										<span class="badge bg-danger"><i><?php echo $nCart; ?></i></span>
 										<br /> 
 										<span class="cart">Cart</span>
 									</a>
 								</div>
 							</div>
 						</div>
+
 					</div>
+
 				</nav>
 				<br /><br />
 				<?php
@@ -307,7 +310,7 @@
 				<nav class="nav1 navbar navbar-expand navbar-dark fixed-top p-5" id="indexnavbar">
 					<h4 class="navbar-brand mt-3">
 						<a href="index"><img class="img-fluid img-thumbnail" src="./wwwroot/img/icon.png" /></a>
-						NICE
+						E-CAL
 					</h4>
 					<ul class="ml-auto navbar-nav justify-content-end">
 						<a href="javascript:void(0)" class="nav-link search-opennav" onclick="search_open()">
@@ -322,7 +325,7 @@
 							<a class="nav-link" href="#" id="navbardrop" data-toggle="dropdown">
 								<i class="btn btn-dark fa fa-ellipsis-v"></i>
 							</a>
-							<div class="dropdown-menu dropdown-menu-right">
+							<div class="dropdown-menu dropdown-menu-right py-0">
 								<?php
 									if($user !== "Guest") {
 										?>
@@ -473,7 +476,7 @@
 													<a class="nav-link" href="#" id="navbardrop" data-toggle="dropdown">
 														<i class="btn btn-dark fa fa-ellipsis-v"></i>
 													</a>
-													<div class="dropdown-menu dropdown-menu-right">
+													<div class="dropdown-menu dropdown-menu-right py-0">
 														<?php
 															//If user isn't signed in display the following options 
 															if($user == "Guest") {
@@ -547,7 +550,7 @@
 													<a class="nav-link" href="#" id="navbardrop" data-toggle="dropdown">
 														<i class="btn btn-dark fa fa-ellipsis-v"></i>
 													</a>
-													<div class="dropdown-menu dropdown-menu-right">
+													<div class="dropdown-menu dropdown-menu-right py-0">
 														<?php 
 															//If user isn't signed in display the following options 
 															if($user == "Guest") {
@@ -648,7 +651,7 @@
 													<a class="nav-link" href="#" id="navbardrop" data-toggle="dropdown">
 														<i class="btn btn-dark fa fa-ellipsis-v"></i>
 													</a>
-													<div class="dropdown-menu dropdown-menu-right">
+													<div class="dropdown-menu dropdown-menu-right py-0">
 														<?php 
 															//If user isn't signed in display the following options 
 															if($user == "Guest") {
@@ -687,46 +690,49 @@
 				<?php
 
 			} else {
-				
-				//Display red border below the active link; Current page: Home, wish or cart
-				if (strpos($currentURL, "/index")!==false) {
-					echo "
-						<style>
-							.home{
-								border-bottom: 2px solid red !important
-							}
-						</style>
-					";
-
-				} elseif (strpos($currentURL, "/wish")!==false) {
-					echo "
-						<style>
-							.saved{
-								border-bottom: 2px solid red !important
-							}
-						</style>
-					";
-
-				} elseif (($currentURL) == 'http://localhost/ecal/') {
-					echo "
-						<style>
-							.home{
-								border-bottom: 2px solid red !important
-							}
-						</style>
-					";
-				}
-
-				if (strpos($currentURL, "/cart")!==false) {
-					echo "
-						<style>
-							.cart{
-								border-bottom: 2px solid red !important
-							}
-						</style>
-					";
-				}
+				// Display red border below the active link; Current page: Home, wish or cart
 				?>
+				<?php if (strpos($currentURL, "/index")!==false) { ?>
+					<style>
+						.home{
+							color: rgb(7, 7, 7) !important;
+							border-bottom: 2px solid red !important
+						}
+					</style>
+				
+				<?php } elseif (strpos($currentURL, "/wish")!==false) { ?>
+					<style>
+						.saved{
+							color: rgb(7, 7, 7) !important;
+							border-bottom: 2px solid red !important
+						}
+
+						.nav-item .wish-text a:hover>.badge i {
+    						color: white !important
+						}
+					</style>
+
+				<?php } elseif (($currentURL) == 'http://localhost/ecal/') { ?>
+					<style>
+						.home{
+							color: rgb(7, 7, 7) !important;
+							border-bottom: 2px solid red !important
+						}
+					</style>
+				<?php } ?>
+
+				<?php if (strpos($currentURL, "/cart")!==false) { ?>
+					<style>
+						.cart{
+							color: rgb(7, 7, 7) !important;
+							border-bottom: 2px solid red !important
+						}
+
+						.nav-item .cart-text .badge i {
+    						color: white !important
+						}
+					</style>
+				<?php } ?>
 				<!-- Display the following bottom nav if page not any mentioned in 1. above -->
 				<!--  Nav2; Bottom Nav: Page links   
 					<button class="navbar-toggler justify-content-end" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
@@ -766,5 +772,5 @@
 			}
 		?>
 	</header>
-<body>
-<br />
+	<body>
+		<br />
