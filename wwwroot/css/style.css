@@ -2199,10 +2199,12 @@ i:before {
     position: relative;
     overflow: hidden;
     margin-bottom: 15px;
+    
 }
 
 .article .article-img img {
     width: 100%;
+    border: 1px solid #ccc;
     -webkit-transition: 0.5s -webkit-transform;
     transition: 0.5s -webkit-transform;
     transition: 0.5s transform;

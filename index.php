@@ -1,10 +1,10 @@
-<?php include "include/headerinc.php";?>
+<?php include "include/headerinc.php"; ?>
 <?php
-    $red_mess = '';
-    if (!isset($_GET['next']) || !isset($_GET['page'])) {
+$red_mess = '';
+if (!isset($_GET['next']) || !isset($_GET['page'])) {
         # code...
-        $red_mess = 'Please Wait';
-    }
+    $red_mess = 'Please Wait';
+}
 ?>
 
 <div class="spn_hol">
@@ -23,11 +23,14 @@
     } */
     .owl-carousel img {
         /* width: 1200px !important; */
-        height: 500px !important;
+        height: 320px !important;
         width: 100%;
         /* height: 100%; */
     }
-
+.custom1 img{
+    width: 100%;
+    height: 630px !important;
+}
     .daydeal h2 {
         color: darkgray
     }
@@ -149,7 +152,7 @@
 <div class="container-fluid" style="width:98%">
 
     <div class="section-title">
-        <h2 class="title">Featured <span>Products</span></h2>
+        <h2 class="title">| Featured <span>Products |</span></h2>
     </div>
 
     <!-- Owl-Carousel -->
@@ -215,39 +218,428 @@
                     <div class="timer-container">
 
                         <div class="section-title2 mb-0">
-                            <h2 class="title mb-3">Hot Deal Of <span> the week</span></h2>
+                            <br />
+                            <br />
+                            <h2 class="title mb-3">| Hot Deal Of <span> the week |</span></h2>
                             <h4 class="text-white text-capitalize mb-0">Hurry Up Offer ends in:</h4>
                         </div>
+                        <br />
                         <div class="py-4">
                             <div id="clockdiv">
-                                <div class="bg-dark">
+                                <div>
                                     <span class="days"></span>
                                     <div class="smalltext">Days</div>
                                 </div>
-                                <div class="bg-dark">
+                                <div>
                                     <span class="hours"></span>
                                     <div class="smalltext">Hours</div>
                                 </div>
-                                <div class="bg-dark">
+                                <div>
                                     <span class="minutes"></span>
                                     <div class="smalltext">Minutes</div>
                                 </div>
-                                <div class="bg-dark">
+                                <div>
                                     <span class="seconds"></span>
                                     <div class="smalltext">Seconds</div>
                                 </div>
                             </div>
                         </div>
-                        <a href="#"><button class="button1 shopbtn" style="vertical-align:middle;"><span>Shop now </span></button></a>
-
+                        <a class="w3-btn w3-white w3-border w3-border-green w3-round-xxlarge w3-hover-green" href="#">Shop now</a>
+                            <br/>
+                            <br />
                     </div>
                 </section>
                 <!-- /hot deal start -->
             </div>
         </div>
     </div>
+    <div class="owl-carousel owl-theme owl-loaded center-owl-nav">
+            <div class="item">
+                <article class="article thumb-article">
+                    <div class="article-img">
+                        <a href="#"><img src="wwwroot/img/blouse.jpg" class="img-fluid" alt="5"></a>
+                    </div>
+                </article>
+                <div class="product-details"> <a href="#"><button class="salebutton" style="vertical-align:middle"><span>Denim Jacket | &#8358;11200 </span> <i id="fa" class="text-white fa"></i></button></a> </div>
+                
+            </div>
+
+            <div class="item">
+                <article class="article thumb-article">
+                    <div class="article-img">
+                        <a href="#"><img src="wwwroot/img/denim.jpg" class="img-fluid" alt="4"></a>
+                    </div>
+                </article>
+                <div class="product-details"> <a href="#"><button class="salebutton" style="vertical-align:middle"><span>Denim Jacket | &#8358;11200 </span> <i id="fa" class="text-white fa"></i></button></a> </div>
+            </div>
+
+            <div class="item">
+                <article class="article thumb-article">
+                    <div class="article-img">
+                        <a href="#"><img src="wwwroot/img/hat.jpg" class="img-fluid" alt="3"></a>
+                    </div>
+                </article>
+                <div class="product-details"> <a href="#"><button class="salebutton" style="vertical-align:middle"><span>Beautiful Lady| &#8358;1.5mil </span><i id="fa" class="text-white fa"></i></button></a> </div>
+            </div>
+
+            <div class="item">
+                <article class="article thumb-article">
+                    <div class="article-img">
+                        <a href=""><img src="wwwroot/img/redcoat.jpg" class="img-fluid" alt="2"></a>
+                    </div>
+                </article>
+                <div class="product-details"> <a href="#"><button class="salebutton" style="vertical-align:middle"><span>Red Coat | &#8358;15000 </span><i id="fa" class="text-white fa"></i></button></a> </div>
+            </div>
+
+            <div class="item">
+                <article class="article thumb-article">
+                    <div class="article-img">
+                        <a href=""><img src="wwwroot/img/trenchcoat.jpg" class="img-fluid" alt="1"></a>
+                    </div>
+                </article>
+                <div class="product-details"> <a href="#"><button class="salebutton" style="vertical-align:middle"><span>Trench Coat | &#8358;1200 </span><i id="fa" class="text-white fa"></i></button></a> </div>
+            </div>
+
+            <div class="item">
+                <article class="article thumb-article">
+                    <div class="article-img">
+                        <a href=""><img src="wwwroot/img/lot.jpg" class="img-fluid" alt="2"></a>
+                    </div>
+                </article>
+                <div class="product-details"> <a href="#"><button class="salebutton" style="vertical-align:middle"><span>Items | &#8358;15000 </span><i id="fa" class="text-white fa"></i></button></a> </div>
+            </div>
+
+            <div class="item">
+                <article class="article thumb-article">
+                    <div class="article-img">
+                        <a href=""><img src="wwwroot/img/mo.jpg" class="img-fluid" alt="1"></a>
+                    </div>
+                </article>
+                <div class="product-details"> <a href="#"><button class="salebutton" style="vertical-align:middle"><span>Arab lady | &#8358;16 Mil </span><i id="fa" class="text-white fa"></i></button></a> </div>
+            </div>
+    </div>
 </div>
 
+
+<div id="kal-section-2" class="kalshop-section"><section class="" id="" >
+    <div class="container">
+        <div class="row text-center">
+          <div class="col-lg-8 col-md-12 ml-auto mr-auto">
+            <div class="section-title">
+              <h2 class="title">| New <span>Arrivals |</span></h2>
+            </div>
+            
+          </div>
+        </div>
+              <div class="row" style="margin-left:20px;">
+                <div class="col-lg-12 col-md-12">
+                  <div class="grid row columns-3">
+                      <!--1 -->
+                        <div class="imgcontainer img">
+                           <a target="_self" href="#">
+                            <img src="wwwroot/img/mo.jpg" alt="#" class="image" width="300" height="200">
+                        </a>
+                        <div class="desc">Add product description and price &#8358; here </div> 
+                            <div class="overlay">
+                                <a href="#" class="icon" title="ADD TO CART">
+                                <i class="fa fa-shopping-bag"></i> 
+                                </a>
+                            </div>
+                         </div>
+                        <!--2 -->
+                        <div class="imgcontainer img">
+                           <a target="_self" href="#">
+                            <img src="wwwroot/img/lot.jpg" alt="#" class="image" width="300" height="200">
+                        </a>
+                        <div class="desc">Add product description and price &#8358; here </div> 
+                            <div class="overlay">
+                                <a href="#" class="icon" title="ADD TO CART">
+                                <i class="fa fa-shopping-bag"></i> 
+                                </a>
+                            </div>
+                         </div>
+                        <!--3 -->
+                         <div class="imgcontainer img">
+                           <a target="_self" href="#">
+                            <img src="wwwroot/img/skate.jpg" alt="#" class="image" width="300" height="200">
+                        </a>
+                        <div class="desc">Add product description and price &#8358; here </div> 
+                            <div class="overlay">
+                                <a href="#" class="icon" title="ADD TO CART">
+                                <i class="fa fa-shopping-bag"></i> 
+                                </a>
+                            </div>
+                         </div>
+                        <!--4 -->
+                        <div class="imgcontainer img">
+                           <a target="_self" href="#">
+                            <img src="wwwroot/img/trenchcoat.jpg" alt="#" class="image" width="300" height="200">
+                        </a>
+                        <div class="desc">Add product description and price &#8358; here </div> 
+                            <div class="overlay">
+                                <a href="#" class="icon" title="ADD TO CART">
+                                <i class="fa fa-shopping-bag"></i> 
+                                </a>
+                            </div>
+                         </div>
+                        <!--5 -->
+                         <div class="imgcontainer img">
+                           <a target="_self" href="#">
+                            <img src="wwwroot/img/hat.jpg" alt="#" class="image" width="300" height="200">
+                        </a>
+                        <div class="desc">Add product description and price &#8358; here </div> 
+                            <div class="overlay">
+                                <a href="#" class="icon" title="ADD TO CART">
+                                <i class="fa fa-shopping-bag"></i> 
+                                </a>
+                            </div>
+                         </div>
+                        <!--6 -->
+                         <div class="imgcontainer img">
+                           <a target="_self" href="#">
+                            <img src="wwwroot/img/fabrizio-russo-630378-unsplash.jpg" alt="#" class="image" width="300" height="200">
+                        </a>
+                        <div class="desc">Add product description and price &#8358; here </div> 
+                            <div class="overlay">
+                                <a href="#" class="icon" title="ADD TO CART">
+                                <i class="fa fa-shopping-bag"></i> 
+                                </a>
+                            </div>
+                         </div>
+
+
+                        </div>
+                </div>
+              </div>
+    </div>
+
+  </section>
+</div>
+<style>
+/* Container needed to position the overlay. Adjust the width as needed */
+.imgcontainer {
+  position: relative;
+  width: 100%;
+  max-width: 400px;
+}
+/* Make the image to responsive */
+.image {
+  width: 100%;
+  height: auto;
+}
+
+/* The overlay effect (full height and width) - lays on top of the container and over the image */
+.overlay {
+  position: absolute;
+  
+  bottom: 0;
+  height: 12%;
+  width: 100%;
+  opacity: 0;
+  transition: .3s ease;
+    background: rgb(0, 0, 0);
+  background: rgba(0, 0, 0, 0.5); /* Black see-through */
+}
+
+/* When you mouse over the container, fade in the overlay icon*/
+.imgcontainer:hover .overlay {
+  opacity: 1;
+}
+
+/* The icon inside the overlay is positioned in the middle vertically and horizontally */
+.icon {
+  color: white;
+  font-size: 25px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+/* When you move the mouse over the icon, change color */
+.fa-user:hover {
+  color: #eee;
+}
+div.img {
+    margin: 15px;
+    border: 1px solid #ccc;
+    float: left;
+    width: 350px;
+}
+
+div.img:hover {
+    border: 1px solid #777;
+}
+
+div.img img {
+    width: 100%;
+    height: auto;
+}
+
+div.desc {
+    padding: 15px;
+    text-align: center;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-size: 15px;
+    font-weight: 30;
+}
+#tiny-product{
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+#tiny-product title {
+    color: #343a40;
+}
+
+.title span {
+    color: #2bc0a4;
+}
+
+</style>
+ <br />
+ <br />
+<!-- tiny product section -->
+<div id="tiny-product section" class="kalshop-section">
+    <section class="product-left-side">
+        <div class="container">
+            <div class="row">
+                
+                <div class="col-lg-4 col-md-12">
+            
+                    <h4 class="mb-4 title">| TOP <span>MEN|</span></h4>
+            
+                            <div class="product product-left mb-4">
+                                <div class="smallimg">
+                                    <div class="img">
+                                        <a target="_self" href="img_mountains.jpg">
+                                        <img src="wwwroot/img/skate.jpg" alt="Mountains" width="600" height="400">
+                                        </a>
+                                        <div class="desc">Add a description of the image here</div>
+                                    </div>
+                                 </div>
+    
+                             </div>    
+                            <div class="product product-left mb-4">
+                                <div class="smallimg">
+                                    <div class="img">
+                                        <a target="_self" href="img_mountains.jpg">
+                                        <img src="wwwroot/img/skate.jpg" alt="Mountains" width="600" height="400">
+                                        </a>
+                                        <div class="desc">Add a description of the image here</div>
+                                    </div>
+                                 </div>
+    
+                             </div>   
+                    </div> 
+
+                    <div class="col-lg-4 col-md-12">
+                                
+                        <h4 class="mb-4 title">| MOST <span>POPULAR |</span></h4>
+                                
+                            <div class="product product-left mb-4">
+                                <div class="smallimg">
+                                    <div class="img">
+                                        <a target="_self" href="img_mountains.jpg">
+                                        <img src="wwwroot/img/skate.jpg" alt="Mountains" width="600" height="400">
+                                        </a>
+                                        <div class="desc">Add a description of the image here</div>
+                                    </div>
+                                 </div>
+    
+                             </div>         
+  
+                            <div class="product product-left mb-4">
+                                <div class="smallimg">
+                                    <div class="img">
+                                        <a target="_self" href="img_mountains.jpg">
+                                        <img src="wwwroot/img/skate.jpg" alt="Mountains" width="600" height="400">
+                                        </a>
+                                        <div class="desc">Add a description of the image here</div>
+                                    </div>
+                                 </div>
+    
+                             </div>    
+                    </div>                             
+                        
+           
+                     <div class="col-lg-4 col-md-12">
+            
+                        <h4 class="mb-4 title">| WOMEN <span>COLLECTION |</span></h4>
+
+                            <div class="product product-left mb-4">
+                                <div class="smallimg">
+                                    <div class="img">
+                                        <a target="_self" href="img_mountains.jpg">
+                                        <img src="wwwroot/img/skate.jpg" alt="Mountains" width="600" height="400">
+                                        </a>
+                                        <div class="desc">Add a description of the image here</div>
+                                    </div>
+                                 </div>
+    
+                             </div>    
+                            <div class="product product-left mb-4">
+                                <div class="smallimg">
+                                    <div class="img">
+                                        <a target="_self" href="img_mountains.jpg">
+                                        <img src="wwwroot/img/skate.jpg" alt="Mountains" width="600" height="400">
+                                        </a>
+                                        <div class="desc">Add a description of the image here</div>
+                                    </div>
+                                 </div>
+    
+                             </div>    
+                        </div>
+</div>
+</section>
+</div>
+
+<br />
+<br />
+<div id="kalshop-section" class="section">
+<section class="grey-bg " id="">
+    <div class="container">
+			
+				<div class="row text-center">
+			      	<div class="col-lg-8 col-md-12 ml-auto mr-auto">
+			        	<div class="section-title">						
+							<h2 class="title">| <b>Best <span>Sellers |</span></h2>
+						</div>
+					</div>
+                </div>	
+                
+<br />
+<br />
+<div class="owl-carousel owl-theme custom1">
+    <div class="item"><a href="#"><img src="wwwroot/img/autoM.jpg" </a> </div>
+    <div class="item"><a href="#"><img src="wwwroot/img/julian-o-hayon-143085-unsplash.jpg" </a>                 <div class="sl-slide-inner">
+                    <div class="bg-img bg-img-4"></div>
+                    <h2>Guaranteed Same day DELIVERY</h2>
+                    <blockquote>
+                        <p>Gadgets & Electronics</p>
+                    </blockquote>
+                </div>
+</div>
+    <div class="item"><a href="#"><img src="wwwroot/img/julian-o-hayon-143085-unsplash.jpg" </a> </div>
+    <div class="item"><a href="#"><img src="wwwroot/img/julian-o-hayon-143085-unsplash.jpg" </a> </div>
+    
+</div>
+</div>
+</section>
+</div>
+<script>
+$('.custom1').owlCarousel({
+    animateOut: 'slideOutDown',
+    animateIn: 'flipInX',
+    loop: true,
+    items:1,
+    margin:30,
+    autoplay:true,
+    autoplayTimeout:5000,
+    stagePadding:30,
+    smartSpeed:450
+});
+</script>
 <!--=== Scripts section ====->
     1 Slider scripts
     2 Owl-Carousel scripts
@@ -272,6 +664,7 @@
         });
     });
 </script>
+
 <script src="./wwwroot/owlcarousel/main.js"></script>
 <script src="./wwwroot/owlcarousel/owl.carousel.min.js"></script>
 <script src="./wwwroot/owlcarousel/jquery.mousewheel.min.js"></script>
