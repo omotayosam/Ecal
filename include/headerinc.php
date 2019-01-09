@@ -68,7 +68,7 @@
 		
 		<!-- Title Bar Text -->
 		<title>E-Kal</title>
-
+		<link rel="stylesheet" type="text/css" href="./wwwroot/css/w3.css" />
 		<!-- Title Bar Icon -->
 		<link rel="icon" type="img/png" href="./wwwroot/img/favicon.png" />
 	
