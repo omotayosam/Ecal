@@ -1,4 +1,20 @@
-<?php include "include/headerinc.php"; ?>
+<?php include "include/headerinc.php";?>
+<?php
+    $red_mess = '';
+    if (!isset($_GET['next']) || !isset($_GET['page'])) {
+        # code...
+        $red_mess = 'Please Wait';
+    }
+?>
+
+<div class="spn_hol">
+    <div class="text"><h5><?php echo $red_mess; ?></h5></div>
+    <div class="spinner">
+        <div class="bounce1"></div>
+        <div class="bounce2"></div>
+        <div class="bounce3"></div>
+    </div>
+</div>
 
 <style>
     /* Send to external style sheet later */
@@ -11,7 +27,7 @@
         width: 100%;
         /* height: 100%; */
     }
-        
+
     .daydeal h2 {
         color: darkgray
     }
@@ -32,7 +48,7 @@
             font-size: 11px !important
         }
     }
-    
+
     @media screen and (max-width: 650px) {
         .daydeal img {
             width: 100px !important;
@@ -42,7 +58,7 @@
             height: 160px;
         }
     }
-    
+
     @media screen and (max-width: 400px) {
         .daydeal h2 {
             font-size: 12px;
@@ -51,13 +67,11 @@
 </style>
 
 <div class="container-fluid demo-2" style="width:98%">
-    <br>
-    </br>
+    <br />
+    <br />
 
     <div id="slider" class="sl-slider-wrapper">
-
         <div class="sl-slider">
-
             <div class="sl-slide" data-orientation="horizontal" data-slice1-rotation="-25" data-slice2-rotation="-25" data-slice1-scale="2" data-slice2-scale="2">
                 <div class="sl-slide-inner">
                     <div class="bg-img bg-img-1"></div>
@@ -109,6 +123,8 @@
             </div>
         </div>
         <!-- /sl-slider -->
+        
+        <!-- sl-slider Nav -->
         <nav id="nav-arrows" class="nav-arrows">
             <span class="nav-arrow-prev">Previous</span>
             <span class="nav-arrow-next">Next</span>
@@ -120,86 +136,12 @@
             <span></span>
             <span></span>
         </nav>
+        <!-- /sl-slider Nav -->
 
     </div>
     <!-- /slider-wrapper -->
 
 </div>
-<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
-<script type="text/javascript" src="js/jquery.ba-cond.min.js"></script>
-<script type="text/javascript" src="js/jquery.slitslider.js"></script>
-<script type="text/javascript">
-    $(function() {
-
-        var Page = (function() {
-
-            var $navArrows = $('#nav-arrows'),
-                $nav = $('#nav-dots > span'),
-                slitslider = $('#slider').slitslider({
-                    onBeforeChange: function(slide, pos) {
-
-                        $nav.removeClass('nav-dot-current');
-                        $nav.eq(pos).addClass('nav-dot-current');
-
-                    }
-                }),
-
-                init = function() {
-
-                    initEvents();
-
-                },
-                initEvents = function() {
-
-                    // add navigation events
-                    $navArrows.children(':last').on('click', function() {
-
-                        slitslider.next();
-                        return false;
-
-                    });
-
-                    $navArrows.children(':first').on('click', function() {
-
-                        slitslider.previous();
-                        return false;
-
-                    });
-
-                    $nav.each(function(i) {
-
-                        $(this).on('click', function(event) {
-
-                            var $dot = $(this);
-
-                            if (!slitslider.isActive()) {
-
-                                $nav.removeClass('nav-dot-current');
-                                $dot.addClass('nav-dot-current');
-
-                            }
-
-                            slitslider.jump(i + 1);
-                            return false;
-
-                        });
-
-                    });
-
-                };
-
-            return {
-                init: init
-            };
-
-        })();
-
-        Page.init();
-
-
-    });
-</script>
-
 <br /><br /><br />
 
 <!-- Div Container For Body Contents-->
@@ -210,72 +152,65 @@
         <h2 class="title">Featured <span>Products</span></h2>
     </div>
 
+    <!-- Owl-Carousel -->
     <div id="owl-carousel-6" class="owl-carousel owl-theme owl-loaded center-owl-nav">
 
-        <div class="item col">
-            <a href="#"><img src="wwwroot/img/blouse.jpg" class="img-fluid" alt="5"></a>
-            <div class="product-details"><a href="#"><button class="salebutton w-100" id="prod" style="vertical-align:middle"><span>Dress | &#8358;1200</span></button></a> </div>
+        <div class="item">
+            <article class="article thumb-article">
+                <div class="article-img">
+                    <a href="#"><img src="wwwroot/img/blouse.jpg" class="img-fluid" alt="5"></a>
+                </div>
+            </article>
+            <div class="product-details"><a href="#"><button class="salebutton" id="prod" style="vertical-align:middle"><span>Dress | &#8358;1200</span> <i id="fa" class="text-white fa"></i></button></a></div>
         </div>
 
         <div class="item">
-            <a href="#"> <img src="wwwroot/img/denim.jpg" class="img-fluid" alt="4"></a>
-            <div class="product-details"> <a href="#"><button class="salebutton" style="vertical-align:middle"><span>Denim Jacket | &#8358;11200 </span></button></a> </div>
+            <article class="article thumb-article">
+                <div class="article-img">
+                    <a href="#"><img src="wwwroot/img/denim.jpg" class="img-fluid" alt="4"></a>
+                </div>
+            </article>
+            <div class="product-details"> <a href="#"><button class="salebutton" style="vertical-align:middle"><span>Denim Jacket | &#8358;11200 </span> <i id="fa" class="text-white fa"></i></button></a> </div>
         </div>
+
         <div class="item">
-            <a href="#"><img src="wwwroot/img/hat.jpg" class="img-fluid" alt="3"></a>
-            <div class="product-details"> <a href="#"><button class="salebutton" style="vertical-align:middle"><span>Beautiful Lady| &#8358;1.5mil </span></button></a> </div>
+            <article class="article thumb-article">
+                <div class="article-img">
+                    <a href="#"><img src="wwwroot/img/hat.jpg" class="img-fluid" alt="3"></a>
+                </div>
+            </article>
+            <div class="product-details"> <a href="go"><button class="salebutton" style="vertical-align:middle"><span>Beautiful Lady| &#8358;1.5mil </span><i id="fa" class="text-white fa"></i></button></a> </div>
         </div>
+
         <div class="item">
-            <a href=""><img src="wwwroot/img/redcoat.jpg" class="img-fluid" alt="2"></a>
-            <div class="product-details"> <a href="#"><button class="salebutton" style="vertical-align:middle"><span>Red Coat | &#8358;15000 </span></button></a> </div>
+            <article class="article thumb-article">
+                <div class="article-img">
+                    <a href=""><img src="wwwroot/img/redcoat.jpg" class="img-fluid" alt="2"></a>
+                </div>
+            </article>
+            <div class="product-details"> <a href="#"><button class="salebutton" style="vertical-align:middle"><span>Red Coat | &#8358;15000 </span><i id="fa" class="text-white fa"></i></button></a> </div>
         </div>
+
         <div class="item">
-            <a href=""><img src="wwwroot/img/trenchcoat.jpg" class="img-fluid" alt="1"></a>
-            <div class="product-details"> <a href="#"><button class="salebutton" style="vertical-align:middle"><span>Trench Coat | &#8358;1200 </span></button></a> </div>
+            <article class="article thumb-article">
+                <div class="article-img">
+                    <a href=""><img src="wwwroot/img/trenchcoat.jpg" class="img-fluid" alt="1"></a>
+                </div>
+            </article>
+            <div class="product-details"> <a href="#"><button class="salebutton" style="vertical-align:middle"><span>Trench Coat | &#8358;1200 </span><i id="fa" class="text-white fa"></i></button></a> </div>
         </div>
 
     </div>
+    <!-- /Owl-Carousel -->
+
 </div>
-<!-- <script>
-    var prod = document.getElementById("prod");
-    var fa = document.getElementById("fa");
 
-    function shopBagAdd() {
-        fa.classList.add("fa-shopping-bag")
-        fa.style.position = 'relative'
-        fa.style.right = '10px'
-        fa.style.transition = '0.5s';
-    }
-    
-    function shopBagRemove() {
-        fa.classList.remove("fa-shopping-bag")
-    }
-
-    prod.addEventListener("mouseenter", shopBagAdd);
-    prod.addEventListener("mouseleave", shopBagRemove);
-
-</script> -->
-
-<script src="./wwwroot/owlcarousel/main.js"></script>
-<script src="wwwroot/owlcarousel/owl.carousel.min.js"></script>
-<script src="wwwroot/owlcarousel/owl.carousel.js"></script>
-<script src="wwwroot/owlcarousel/jquery.mousewheel.min.js"></script>
-<script type="text/javascript">
-    
-    // owl.on('mousewheel', '.owl-stage', function(e) {
-    //     if (e.deltaY > 0) {
-    //         owl.trigger('next.owl');
-    //     } else {
-    //         owl.trigger('prev.owl');
-    //     }
-    //     e.preventDefault();
-    // });
-</script>
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-12 p-0">
-            <div id="kashop-section-1" class="kalshop-section index-section">
-                <!--hot deal start-->
+            <div id="kalshop-section-1" class="kalshop-section index-section">
+                
+                <!-- hot deal start -->
                 <section class="theme-bg text-center text-white" id="">
                     <div class="timer-container">
 
@@ -285,19 +220,19 @@
                         </div>
                         <div class="py-4">
                             <div id="clockdiv">
-                                <div>
+                                <div class="bg-dark">
                                     <span class="days"></span>
                                     <div class="smalltext">Days</div>
                                 </div>
-                                <div>
+                                <div class="bg-dark">
                                     <span class="hours"></span>
                                     <div class="smalltext">Hours</div>
                                 </div>
-                                <div>
+                                <div class="bg-dark">
                                     <span class="minutes"></span>
                                     <div class="smalltext">Minutes</div>
                                 </div>
-                                <div>
+                                <div class="bg-dark">
                                     <span class="seconds"></span>
                                     <div class="smalltext">Seconds</div>
                                 </div>
@@ -307,10 +242,41 @@
 
                     </div>
                 </section>
+                <!-- /hot deal start -->
             </div>
         </div>
     </div>
 </div>
+
+<!--=== Scripts section ====->
+    1 Slider scripts
+    2 Owl-Carousel scripts
+    3 Timer
+    4 Spinner
+<--========================-->
+<!-- 1 Slider scripts -->
+<script type="text/javascript" src="wwwroot/slider/js/jquery.ba-cond.min.js"></script>
+<script type="text/javascript" src="wwwroot/slider/js/jquery.slitslider.js"></script>
+
+<!-- 2 Owl-Carousel scripts -->
+<script type="text/javascript">
+    $(document).ready(function(){
+        $(".salebutton").on({
+            mouseenter: function(){
+                $(".fa",this).addClass("important fa-shopping-bag");
+                $(".fa",this).css({"right":"22px", "position":"relative"});
+            },
+            mouseleave: function(){
+                $(".fa",this).removeClass("important fa-shopping-bag");
+            }
+        });
+    });
+</script>
+<script src="./wwwroot/owlcarousel/main.js"></script>
+<script src="./wwwroot/owlcarousel/owl.carousel.min.js"></script>
+<script src="./wwwroot/owlcarousel/jquery.mousewheel.min.js"></script>
+
+<!-- 3 Timer -->
 <script type="text/javascript">
     function getTimeRemaining(endtime) {
         var t = Date.parse(endtime) - Date.parse(new Date());
@@ -354,3 +320,6 @@
     var deadline = new Date(Date.parse(new Date()) + 15 * 24 * 60 * 60 * 1000);
     initializeClock('clockdiv', deadline);
 </script>
+
+<!-- 4 Spinner script -->
+<script src="./wwwroot/js/script.js"></script>
