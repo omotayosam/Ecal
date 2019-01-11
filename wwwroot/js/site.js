@@ -2,6 +2,7 @@
  * 1. Search
  * 2. Side-Nav
  * 3. Display Shopping-bag fa-icon
+ * 4. Display Heart-alt fa-icon
  **/
 
 $(document).ready(function() {
@@ -190,7 +191,7 @@ $(document).ready(function() {
     /*------------ /Close Side-nav ------------*/
     /*<===================== End of Side-nav Functions =====================>*/
 
-    /*<===================== Display Shopping-bag fa-icon =====================> */
+    /*<===================== 3. Display Shopping-bag fa-icon =====================> */
     $(".salebutton").on({
         mouseenter: function() {
             $(".fa", this).addClass("important fa-shopping-bag");
@@ -204,5 +205,24 @@ $(document).ready(function() {
         }
     });
     /*<===================== End of Display Shopping-bag fa-icon =====================> */
+
+    /*<===================== 4. Display Heart-alt fa-icon =====================> */
+    $('.wish').on({
+        mouseenter: function() {
+            $('.heart', this).removeClass('far').addClass('fa');
+        },
+        mouseleave: function() {
+            $('.heart', this).removeClass('fa').addClass('far');
+        }
+    });
+    $('.heart').on({
+        mouseenter: function() {
+            $(this).removeClass('far').addClass('fa');
+        },
+        mouseleave: function() {
+            $(this).removeClass('fa').addClass('far');
+        }
+    });
+    /*<===================== End of Display Heart-alt fa-icon =====================> */
 
 });

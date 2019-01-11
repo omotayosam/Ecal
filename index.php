@@ -637,7 +637,7 @@
 
 </div> 
 <!-- /Div Container For Body Contents[2]-->
-
+<?php include "include/footerinc.php";?>
 <!--=== Scripts section ====->
     1. Slider scripts
     2. Owl-Carousel scripts

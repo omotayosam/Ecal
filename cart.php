@@ -23,22 +23,15 @@
         padding: .0.20rem .0.20rem !important;
     }
     
-    .main input[type="text"]{
-        border: none !important;
-        outline: none !important;
-        border-radius: 0 !important;
-        border-bottom: solid 1px lightgrey !important;
-    }
-    
     .itembox{
         min-height: 20px;
         padding: 19px;
         margin-bottom: 20px;
         background-color: white;
-        border: 1px solid #e3e3e3;
-        border-radius: 4px;
-        -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .05);
-        box-shadow: inset 0 1px 1px rgba(0, 0, 0, .05)
+        /* border: 1px solid #e3e3e3; */
+        border-radius: 6px;
+        /* -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .05);
+        box-shadow: inset 0 1px 1px rgba(0, 0, 0, .05) */
     }
     
     /* Styling for top part of cart item */
@@ -93,7 +86,7 @@
     
     .num{
         line-height: 0;
-        color: red
+        color: darkred
     }
     
     .btn-sm{
@@ -116,19 +109,9 @@
         color: darkgreen !important
     }
     
-    .down .fa-trash:hover,
+    .down .trash:hover,
     .down .fa-minus-circle:hover{
-        color: darkred !important
-    }
-    
-    .down .fa-trash:hover::before {
-        content: "\f014" !important;
-        color: darkred !important
-    }
-    
-    .down .fa-heart-o:hover::before{
-        content: "\f004" !important;
-        color: darkred !important
+        color: #dc3545 !important
     }
     /*--> End of Styling for down part of cart item <--*/
 
@@ -150,9 +133,9 @@
         }
     }
     
-    @media screen and (min-width: 800px){
+    @media screen and (max-width: 800px){
         .top img{
-            height: 200px;
+            height: 200px !important;
         }
     }
 </style>
@@ -228,174 +211,180 @@
 
             while($check = $get_Items_sqli->fetch_array()){
 
-            // $itemID = $call['item_id'];
-            $pic = $check['item_pic'];
-            $name = $check['item_name'];
-            $details = $check['item_info'];
-            // $gender = $call['gender'];
-            // $colour = $call['colour'];
-            // $size = $call['size'];
-            $cSign = $check['currency'];
-            $price = $check['price'];
+                $pic = $check['item_pic'];
+                $name = $check['item_name'];
+                $details = $check['item_info'];
+                $cSign = $check['currency'];
+                $price = $check['price'];
+                $item_left = $check['no_item_left'];
 
-            // `colour` = '$colour' and `size` = '$size'
-            // $get_IndItems = "SELECT `item_count` FROM `cart` WHERE `user_id` = '$uId'";
-            // $get_IndItems_sqli = mysqli_query($connect, $get_IndItems);
-            // $get = mysqli_fetch_assoc($get_IndItems_sqli);
-            // $checkIndItems = $get['item_count'];
+                if ((($item_left) == 0) || ($item_left) > 1) {
+                    # code...
+                    $item_left .= ' Items Left';
 
-                    
-            if(@$_POST['minus_'. $itemID . '']) {
-                # code...
-                // $cart_check_sql = "SELECT `item_count`, `total_price` FROM `cart` WHERE `item_id` = '$itemID'";
-                // $cart_check = mysqli_query($connect, $cart_check_sql);
-                // $get = mysqli_fetch_array($cart_check);
-                // $countI = $get['item_count'];
-                // $Tprice = $get['total_price'];
+                } else {
+                    # code...
+                    $item_left .= ' Item Left';
+                }
+                // `colour` = '$colour' and `size` = '$size'
+                // $get_IndItems = "SELECT `item_count` FROM `cart` WHERE `user_id` = '$uId'";
+                // $get_IndItems_sqli = mysqli_query($connect, $get_IndItems);
+                // $get = mysqli_fetch_assoc($get_IndItems_sqli);
+                // $checkIndItems = $get['item_count'];
 
-                $i = intval($countI);
-                $i--;
-                $TCprice = intval($Tprice);
-                $Cprice = intval($price);
-                            
-                if($TCprice == ($Cprice)) {
+                
+                if(@$_POST['minus_'. $itemID . '']) {
+                    # code...
+                    // $cart_check_sql = "SELECT `item_count`, `total_price` FROM `cart` WHERE `item_id` = '$itemID'";
+                    // $cart_check = mysqli_query($connect, $cart_check_sql);
+                    // $get = mysqli_fetch_array($cart_check);
+                    // $countI = $get['item_count'];
+                    // $Tprice = $get['total_price'];
+
+                    $i = intval($countI);
+                    $i--;
+                    $TCprice = intval($Tprice);
+                    $Cprice = intval($price);
+                                
+                    if($TCprice == ($Cprice)) {
+                        $remCart_sql = "DELETE FROM `cart` WHERE `item_id` = '$itemID'";
+                        $remCart_sqli = mysqli_query($connect,$remCart_sql);
+                        $errmsg = "
+                            <div class='container alert alert-danger bg-light'>
+                                <span class='fa fa-exclamation-triangle'></span> Item Successfully removed from cart!!! $count
+                            </div>
+                        ";
+                        echo "<meta http-equiv =\"refresh\" content=\"1.5; url = cart\">";
+
+                    } else {
+                        $TCprice = intval($Tprice - $price);
+                                    
+                        $remCart_sql = "UPDATE `cart` SET `item_count` = '$i', `total_price` = '$TCprice' WHERE `item_id` = '$itemID'";
+                        $remCart_sqli = mysqli_query($connect, $remCart_sql);
+                        $errmsg = "
+                            <div class='container alert alert-warning bg-light'>
+                                <span class='fa fa-exclamation-triangle'></span> Item Successfully removed from cart!!!
+                            </div>
+                        ";
+                        echo "<meta http-equiv =\"refresh\" content=\"1.5; url = cart\">";
+                    }
+                }
+
+                if(@$_POST['plus_'. $itemID . '']) {
+                    # code...
+                    $cart_check_sql = "SELECT `item_count`, `total_price` FROM `cart` WHERE `item_id` = '$itemID'";
+                    $cart_check = mysqli_query($connect, $cart_check_sql);
+                    $get = mysqli_fetch_array($cart_check);
+                    $count = $get['item_count'];
+                    $Tprice = $get['total_price'];
+                                
+                    $i = intval($count);
+                    $i++;
+                                
+                    $Tprice = intval($Tprice + $price);
+
+                    $addCart_sql = "UPDATE `cart` SET `item_count` = '$i', `total_price` = '$Tprice' WHERE `item_id` = '$itemID'";
+                    $addCart_sqli = mysqli_query($connect, $addCart_sql);
+                    $errmsg = "
+                        <div class='container alert alert-success bg-light'>
+                            <span class='fa fa-exclamation-triangle'></span> Item Successfully Added!!!
+                        </div>
+                    ";
+                    echo "<meta http-equiv =\"refresh\" content=\"1; url = cart\">";
+                }
+
+                if(@$_POST['remCart_'. $itemID . '']) {
+                    # code...
                     $remCart_sql = "DELETE FROM `cart` WHERE `item_id` = '$itemID'";
                     $remCart_sqli = mysqli_query($connect,$remCart_sql);
                     $errmsg = "
-                        <div class='container alert alert-danger bg-light'>
-                            <span class='fa fa-exclamation-triangle'></span> Item Successfully removed from cart!!! $count
-                        </div>
-                    ";
-                    echo "<meta http-equiv =\"refresh\" content=\"1.5; url = cart\">";
-
-                } else {
-                    $TCprice = intval($Tprice - $price);
-                                
-                    $remCart_sql = "UPDATE `cart` SET `item_count` = '$i', `total_price` = '$TCprice' WHERE `item_id` = '$itemID'";
-                    $remCart_sqli = mysqli_query($connect, $remCart_sql);
-                    $errmsg = "
-                        <div class='container alert alert-warning bg-light'>
+                        <div class='container alert alert-success bg-light'>
                             <span class='fa fa-exclamation-triangle'></span> Item Successfully removed from cart!!!
                         </div>
                     ";
-                    echo "<meta http-equiv =\"refresh\" content=\"1.5; url = cart\">";
+                    echo "<meta http-equiv =\"refresh\" content=\"2; url = cart\">";
                 }
-            }
 
-            if(@$_POST['plus_'. $itemID . '']) {
-                # code...
-                $cart_check_sql = "SELECT `item_count`, `total_price` FROM `cart` WHERE `item_id` = '$itemID'";
-                $cart_check = mysqli_query($connect, $cart_check_sql);
-                $get = mysqli_fetch_array($cart_check);
-                $count = $get['item_count'];
-                $Tprice = $get['total_price'];
+                if(@$_POST['view_'. $itemID . '']) {
+                    echo "<meta http-equiv =\"refresh\" content=\"1; url = preview?id=$itemID\">";
+                }
                             
-                $i = intval($count);
-                $i++;
-                            
-                $Tprice = intval($Tprice + $price);
-
-                $addCart_sql = "UPDATE `cart` SET `item_count` = '$i', `total_price` = '$Tprice' WHERE `item_id` = '$itemID'";
-                $addCart_sqli = mysqli_query($connect, $addCart_sql);
-                $errmsg = "
-                    <div class='container alert alert-success bg-light'>
-                        <span class='fa fa-exclamation-triangle'></span> Item Successfully Added!!!
-                    </div>
-                ";
-                echo "<meta http-equiv =\"refresh\" content=\"1; url = cart\">";
-            }
-
-            if(@$_POST['remCart_'. $itemID . '']) {
-                # code...
-                $remCart_sql = "DELETE FROM `cart` WHERE `item_id` = '$itemID'";
-                $remCart_sqli = mysqli_query($connect,$remCart_sql);
-                $errmsg = "
-                    <div class='container alert alert-success bg-light'>
-                        <span class='fa fa-exclamation-triangle'></span> Item Successfully removed from cart!!!
-                    </div>
-                ";
-                echo "<meta http-equiv =\"refresh\" content=\"2; url = cart\">";
-            }
-
-            if(@$_POST['view_'. $itemID . '']) {
-                echo "<meta http-equiv =\"refresh\" content=\"1; url = preview?id=$itemID\">";
-            }
-                        
-            if(@$_POST['contCheck']) {
-                # code...
-                if($user !== "Guest") {
+                if(@$_POST['contCheck']) {
                     # code...
-                    $errmsg = "";
-                    if($Ugender == "Male") {
-                        echo "<meta http-equiv =\"refresh\" content=\"1; url = men\">";
-
-                    } elseif($Ugender == "Female") {
+                    if($user !== "Guest") {
                         # code...
-                        echo "<meta http-equiv =\"refresh\" content=\"1; url = women\">";
-                    }
+                        $errmsg = "";
+                        if($Ugender == "Male") {
+                            echo "<meta http-equiv =\"refresh\" content=\"1; url = men\">";
 
-                } else{
-                    echo "<meta http-equiv =\"refresh\" content=\"1; url = index\">";
-                }
-            }    
-            ?>
-            <!-- ========[ Cart Item Container ]======== -->
-            <div class="main container-fluid pt-2 itembox offset-lg-2 col-lg-8">
-                <div class="row">
-                    <div class="col-12">
-                        <?php echo $errmsg; ?>
-                        <!-- ========[ Top row: Item image, name, details & price ]======== -->
-                        <div class="top row">
-                            <div class="cart-img col-4">
-                                <a href="<?php echo $pic; ?>" target="_blank">
-                                    <img class="img-fluid" src="<?php echo $pic; ?>" alt="<?php echo "$name"; ?>" title="<?php echo "$details"; ?>" style="width:100%" />
-                                </a>
-                            </div>
-                            <br /><br />
-                            <div class="mt-md-5 col px-5">
-                                <!-- <a href="<?php //echo "preview?id=$itemID"; ?>"> -->
-                                <div>
-                                    <a href="<?php echo "preview?id=$itemID"; ?>">
-                                        <span class="h5 pb-2"><?php echo $name; ?></span>
-                                        <h6 style="line-height:0;"><?php echo $details; ?></h6><br />
-                                        <span class="h5"><i style="font-weight:300">KAL Express_<sup>_</sup></i> <span class="text-danger fa fa-fighter-jet"></span></span>
-                                        <h5><b><?php echo $cSign.$price; ?></b></h5>
+                        } elseif($Ugender == "Female") {
+                            # code...
+                            echo "<meta http-equiv =\"refresh\" content=\"1; url = women\">";
+                        }
+
+                    } else{
+                        echo "<meta http-equiv =\"refresh\" content=\"1; url = index\">";
+                    }
+                }    
+                ?>
+                <!-- ========[ Cart Item Container ]======== -->
+                <div class="main container-fluid pt-2 itembox shadow-lg offset-lg-2 col-lg-8">
+                    <div class="row">
+                        <div class="col-12">
+                            <?php echo $errmsg; ?>
+                            <!-- ========[ Top row: Item image, name, details & price ]======== -->
+                            <div class="top row">
+                                <div class="cart-img col-4">
+                                    <a href="<?php echo $pic; ?>" target="_blank">
+                                        <img class="img-fluid" src="<?php echo $pic; ?>" alt="<?php echo "$name"; ?>" title="<?php echo "$details"; ?>" style="width:100%" />
                                     </a>
                                 </div>
-                                <!-- </a> -->
+                                <br /><br />
+                                <div class="mt-md-5 col px-5">
+                                    <div>
+                                        <a href="<?php echo "preview?id=$itemID"; ?>">
+                                            <span class="h5"><?php echo $name; ?></span>
+                                            <h6 style="line-height:0;"><?php echo $details; ?></h6><br />
+                                            <span class="h5"><i style="font-weight:300">KAL Express_<sup>_</sup></i> <span class="text-danger fa fa-fighter-jet"></span></span>
+                                            <h5><b><?php echo $cSign.$price; ?></b></h5>
+                                        </a>
+                                    </div>
+                                    <div class="mt-5 pt-5 text-right text-muted"><small><?php echo "$item_left";?></small></div>
+                                    <!-- </a> -->
+                                </div>
                             </div>
-                        </div>
-                        <!-- ========[ End of Top row ]======== -->
-                        <hr>
+                            <!-- ========[ End of Top row ]======== -->
+                            <hr>
 
-                        <!-- ========[ Down row: Wishlist button, Remove item button & Decrement/Increment item button ]======== -->
-                        <div class="down row">
-                            <div class="text-center binborder pt-2 col-2">
-                                <form action="#" method="POST">
-                                    <button type="submit" class="mr-1 bg-white btn btn-sm" name="<?php echo "addWish_$itemID"; ?>" value="wish"><i class="far fa-heart"></i></button>
-                                </form>
+                            <!-- ========[ Down row: Wishlist button, Remove item button & Decrement/Increment item button ]======== -->
+                            <div class="down row">
+                                <div class="text-center binborder pt-2 col-2">
+                                    <form action="#" method="POST">
+                                        <button type="submit" class="mr-1 bg-white btn btn-sm wish" name="<?php echo "addWish_$itemID"; ?>" value="wish"><i class="heart text-danger far fa-heart"></i></button>
+                                    </form>
+                                </div>
+                                <div class="mt-2 col-5 col-sm-7">
+                                    <form action="#" method="POST">
+                                        <button type="submit" class="mr-1 bg-white btn btn-sm trash" name="<?php echo "remCart_$itemID"; ?>" value="remove"><i class="fas fa-trash-alt"></i> <span class="trashtext">REMOVE</span></button>
+                                    </form>
+                                </div>
+                                <div class="text-right col-4 col-sm-3">
+                                    <form action="" method="POST" class="mt-sm-1">
+                                        <span class="d-inline-flex">
+                                            <button type="submit" class="mr-1 rounded-circle bg-white btn btn-sm" name="<?php echo "minus_$itemID"; ?>" value="minus"><i class="fa fa-minus-circle"></i></button>
+                                            <i class="h5 num mt-3"><?php echo $countI; ?><hr></i>
+                                            <button type="submit" class="ml-1 rounded-circle bg-white btn btn-sm" name="<?php echo "plus_$itemID"; ?>" value="plus"><i class="fa fa-plus-circle"></i></button>
+                                        </span>
+                                    </form>
+                                </div>
                             </div>
-                            <div class="mt-2 col-5 col-sm-7">
-                                <form action="#" method="POST">
-                                    <button type="submit" class="mr-1 bg-white btn btn-sm" name="<?php echo "remCart_$itemID"; ?>" value="remove"><i class="fas fa-trash-alt"></i> <span class="trashtext">REMOVE</span></button>
-                                </form>
-                            </div>
-                            <div class="text-right col-4 col-sm-3">
-                                <form action="#" method="POST" class="mt-sm-1">
-                                    <span class="d-inline-flex">
-                                        <button type="submit" class="mr-1 rounded-circle bg-white btn btn-sm" name="<?php echo "minus_$itemID"; ?>" value="minus"><i class="fa fa-minus-circle"></i></button>
-                                        <i class="num mt-3"><?php echo $countI; ?><hr></i>
-                                        <button type="submit" class="ml-1 rounded-circle bg-white btn btn-sm" name="<?php echo "plus_$itemID"; ?>" value="plus"><i class="fa fa-plus-circle"></i></button>
-                                    </span>
-                                </form>
-                            </div>
+                            <!-- ========[ End of Down row ]======== -->
                         </div>
-                        <!-- ========[ End of Down row ]======== -->
                     </div>
                 </div>
-            </div>
-            <!-- ========[ End of cart item container ]======== -->  
-        <?php }
+                <!-- ========[ End of cart item container ]======== -->  
+                <?php 
+            }
         } 
     ?>
     <br />
@@ -433,7 +422,4 @@
 </body>
 <!-- ========[ End of body ]======== -->
 
-<?php
-    //Include Footer
-    include("include/footerinc.php"); 
-?>
+<?php include "include/footerinc.php"; ?>

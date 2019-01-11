@@ -97,7 +97,7 @@
 						
 						<div class="row">
 							<div class="col-lg-6 mb-2">
-								<label for="">Item Colour <br /><small>(Optional...But neccessary for Fashion Category!!!)</small>:</label>
+								<label for="">Item Colour <small>(Optional...But neccessary for Fashion Category!!!)</small>:</label>
                                 <div class="input-group input-group-sm">
 									<input class="form-control" list="colours" name="item_colour" id="item_colour" placeholder="Type in Item Colour or Select from the List" required >
 									<datalist id="colours">
@@ -128,19 +128,28 @@
 						
 						<div class="row">
 							<div class="col-lg-6 mb-2">
-								<div class="mb-1">
-									<label for="">Item Image(s):</label>
-									<div class="input-group input-group-sm">
-										<input class="form-control" name="item_image[]" id="item_image" type="file" required multiple />
-									</div>
-									<small><i>Hover to view name of files</i></small>
+								<label for="">Item Image(s):</label>
+								<div class="input-group input-group-sm">
+									<input class="form-control" name="item_image[]" id="item_image" type="file" required multiple />
 								</div>
-							
-								<label for="">Item Details:</label>
-                                <div class="input-group input-group-sm">
-									<textarea class="form-control form-control-sm" name="item_details" id="item_details" cols="30" rows="5" placeholder="PowerPoint Description Of Item..."></textarea>
+								<small><i>Hover to view name of files</i></small>
+							</div>
+                        	<div class="col-lg-6 mb-2">
+								<label for="">Number Of Item Availabe:</label>
+								<div class="input-group input-group-sm">
+									<input class="form-control" min="1" type="number" name="item_left" id="item_left" placeholder="Number of Item Available" required />
 								</div>
 							</div>
+                        </div>
+						
+						<div class="row">
+							<div class="col-lg-6 mb-2">
+								<label for="">Item Details:</label>
+                                <div class="input-group input-group-sm">
+									<textarea class="form-control form-control-sm" name="item_details" id="item_details" cols="30" rows="10" placeholder="PowerPoint Description Of Item..."></textarea>
+								</div>
+							</div>
+							
                         	<div class="col-lg-6 mb-2">
 								<label for="">Item Description:</label>
                                 <div class="input-group input-group-sm">

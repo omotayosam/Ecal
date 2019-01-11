@@ -31,20 +31,21 @@
         $item_pics = ''; ## Empty
     }
     
+    $item_left = @trim(strip_tags($_POST['item_left'])); ## No. of Items left
     $item_details = @trim(strip_tags($_POST['item_details'])); ## Item Details
     $item_description = @trim(strip_tags($_POST['item_description'])); ## Item Description
 
     // Function to upload image and insert all item values into database
-    function image_upload_plus($connect, $err, $success, $item_name, $item_cat, $item_class, $item_gender, $item_pics, $item_colour, $item_size, $item_type, $item_price, $item_details, $item_description) {
+    function image_upload_plus($connect, $err, $success, $item_name, $item_cat, $item_class, $item_gender, $item_pics, $item_left, $item_colour, $item_size, $item_type, $item_price, $item_details, $item_description) {
         $null = ''; ## Variable To hold erroe message when Uploaded Item already exixts in the Database
         $image = []; ## Image array variable
         $upload =
-            [
-                'path' => './../../wwwroot/img/' . $item_cat . '/', ## Upload Path.
-                'db_path' => 'wwwroot/img/' . $item_cat . '/', ## Upload Path to display in DB.
-                'max_size' => '20971520', ## 20MB per Image.
-                'allowed_types' => ['jpeg', 'JPEG', 'jpg', 'JPG', 'png', 'PNG', 'gif', 'GIF', 'bmp', 'BMP'] ## Allowed Image extensions.
-            ];
+        [
+            'path' => './../../wwwroot/img/' . $item_cat . '/', ## Upload Path.
+            'db_path' => 'wwwroot/img/' . $item_cat . '/', ## Upload Path to display in DB.
+            'max_size' => '20971520', ## 20MB per Image.
+            'allowed_types' => ['jpeg', 'JPEG', 'jpg', 'JPG', 'png', 'PNG', 'gif', 'GIF', 'bmp', 'BMP'] ## Allowed Image extensions.
+        ];
             
         // If $item_pics is not empty
         if (!empty(array_filter($item_pics))) {
@@ -68,10 +69,23 @@
                         $join = implode($array['name']); ## Put each concatnated Absolute paths together, seperated by a space.
                         array_push($image,$join); ## Push them into the 'Image array variable'(Above).
 
+
                         $check = $connect->query("SELECT * FROM `items` WHERE`item_category` = '$item_cat' AND `item_class` = '$item_class' AND `item_name` = '$item_name' AND `item_info` = '$item_details'");
                         $count_rows = $check->num_rows;
+                        $get = $check->fetch_array();
+                        $item_id = $get['id'];
 
-                        if (($count_rows) < 1) {
+                        if (stristr($item_cat, "fashion")) {
+                            $check = $connect->query("SELECT * FROM `{$item_class}` WHERE `item_id` = '$item_id' AND `size` = '$item_size' AND `colour` = '$item_colour' AND `gender` = '$item_gender'");
+                            $count_rows_class = $check->num_rows;
+
+                        } else {
+                            # code...
+                            $check = $connect->query("SELECT * FROM `others` WHERE `item_id` = '$item_id' AND `colour` = '$item_colour'");
+                            $count_rows_class = $check->num_rows;
+                        }
+
+                        if (($count_rows) < 1 && ($count_rows_class) < 1) {
                             // If the Upload folder doesn't exist,
                             if (!file_exists($upload['path'])) {
                                 # code...
@@ -101,7 +115,7 @@
                             }
 
                         } else {
-                            if (($count_rows) > 0) {
+                            if (($count_rows) > 0 && ($count_rows_class) > 0) {
                                 # code...
                                 $null =
                                 '
@@ -155,9 +169,9 @@
                     </div>
                 ';
 
-                if (($count_rows) < 1) {
+                if (($count_rows) < 1 && ($count_rows_class) < 1) {
                     # code...
-                    $insert = $connect->query("INSERT INTO `items` VALUES('', '$item_name', '$image', '$image_slide', '$item_cat', '$item_class', '$item_details', '$item_description', '$currency', '$item_price', '0')");
+                    $insert = $connect->query("INSERT INTO `items` VALUES('', '$item_name', '$image', '$image_slide', '$item_cat', '$item_class', '$item_details', '$item_description', '$currency', '$item_price', '$item_left')");
 
                     if (stristr($item_cat, "fashion")) {
                         # code...
@@ -165,7 +179,7 @@
                         $get = $get_id->fetch_array();
                         $id = $get['id'];
 
-                        $insert = $connect->query("INSERT INTO `{$item_class}` VALUES('', '$id', '$item_type', '$item_size', '$item_colour', '$item_gender')");
+                        $insert = $connect->query("INSERT INTO `$item_class` VALUES('', '$id', '$item_type', '$item_size', '$item_colour', '$item_gender')");
 
                     } else {
                         # code...
@@ -195,12 +209,12 @@
         }
     }
 
-    function upload($connect, $item_name, $item_cat, $item_class, $item_gender, $item_pics, $item_colour, $item_size, $item_type, $item_price, $item_details, $item_description) {
+    function upload($connect, $item_name, $item_cat, $item_class, $item_gender, $item_pics, $item_left, $item_colour, $item_size, $item_type, $item_price, $item_details, $item_description) {
         $err = [];
         $success = [];
 
         if (!empty($_POST) || !empty($_FILES)) {
-            if (!empty($item_name && $item_price && $item_details && $item_description)) {
+            if (!empty($item_name && $item_price && $item_left && $item_details && $item_description)) {
                 # code...
                 if (((strlen($item_name)) < 3) || ((strlen($item_details)) < 3) || ((strlen($item_description)) < 5)) {
                     # code...
@@ -274,7 +288,7 @@
                                         if ((strlen($item_colour)) > 2) {
                                             # code...
                                             $item_details = $item_details . " ($item_gender)";
-                                            image_upload_plus($connect, $err, $success, $item_name, $item_cat, $item_class, $item_gender, $item_pics, $item_colour, $item_size, $item_type, $item_price, $item_details, $item_description);
+                                            image_upload_plus($connect, $err, $success, $item_name, $item_cat, $item_class, $item_gender, $item_pics, $item_left, $item_colour, $item_size, $item_type, $item_price, $item_details, $item_description);
 
                                         } else {
                                             # code...
@@ -325,7 +339,7 @@
                                 
                                 if (!empty($_FILES)) {
                                     # code...
-                                    image_upload_plus($connect, $err, $success, $item_name, $item_cat, $item_class, $item_gender, $item_pics, $item_colour, $item_size, $item_type, $item_price, $item_details, $item_description);
+                                    image_upload_plus($connect, $err, $success, $item_name, $item_cat, $item_class, $item_gender, $item_pics, $item_left, $item_colour, $item_size, $item_type, $item_price, $item_details, $item_description);
 
                                 } else {
                                     # code...
@@ -368,12 +382,12 @@
                 echo
                 '
                     <div class="alert alert-danger">
-                        <i class="fa fa-exclamation-triangle"></i> Please Input Item Name, Price, Details & Description!!!
+                        <i class="fa fa-exclamation-triangle"></i> Please Input Item Name, Price, Details, Description & Number of Item Available!!!
                     </div>
                 ';
             }
         }
     }
         
-    upload($connect, $item_name, $item_cat, $item_class, $item_gender, $item_pics, $item_colour, $item_size, $item_type, $item_price, $item_details, $item_description);
+    upload($connect, $item_name, $item_cat, $item_class, $item_gender, $item_pics, $item_left, $item_colour, $item_size, $item_type, $item_price, $item_details, $item_description);
 ?>
