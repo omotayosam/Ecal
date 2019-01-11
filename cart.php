@@ -43,7 +43,7 @@
     
     /* Styling for top part of cart item */
     .top img {
-        opacity: 0.9;
+        opacity: 0.95;
         -webkit-transition: 0.5s opacity;
         -webkit-transform: scale(0.97);
         -ms-transform: scale(0.97);
@@ -62,7 +62,7 @@
         transform: scale(1);
     }
 
-    .top a>div:hover {
+    .top div>a:hover {
         color: blue !important
     }
     
@@ -136,10 +136,11 @@
     .complete button{
         background-color: rgb(228, 134, 13) !important
     }
-    /*--> End of Styling for top part of cart item <--*/
+    /*--> End of Styling for complete button <--*/
     
+    /* Responsive */
     @media screen and (max-width: 600px){
-        .top h5{
+        .top .h5{
             font-size: 14px !important
         }
         .down button{
@@ -173,25 +174,33 @@
         $getP = $get_price_sqli->fetch_array();
         $mPrice = $getP['Total'];
 
-        $get_price_sqli = $connect->query("SELECT SUM(`price`) As Total from `items` WHERE `id` = '$cart_uid'");
+        $get_price_sqli = $connect->query("SELECT SUM(`subtotal`) As Total from `cart` WHERE `user_id` = '$uId'");
         $getP = $get_price_sqli->fetch_array();
         $nPrice = $getP['Total'];
 
         $get_cItems_sqli = $connect->query("SELECT * FROM `cart` WHERE `user_id` = '$uId'");
         $check = $get_cItems_sqli->num_rows;
 
-        if($check == 0) {
+        if ($check == 0) {
             ?>
             <div class="main container-fluid bg-light pt-2 itembox offset-lg-2 col-lg-8">
                 <div class="row">
                     <div class="col-12">
                         <br />
-                        <div class='container alert alert-danger bg-white'>
+                        <div class="container alert alert-danger bg-white">
                             <span class='fa fa-exclamation-triangle'></span> Sorry you have no items in the cart...<br>
                         </div>
-                        <div class='container alert alert-info bg-white'>
-                            <span class='fa fa-exclamation-triangle'></span> Add items to cart for them to display here
-                        </div>
+
+                        <?php if ($user == 'Guest') { ?>
+                            <div class="container alert alert-info bg-white">
+                                <span class='fa fa-exclamation-triangle'></span> Please <a href="login?prev=cart" class="text-primary">Login</a> to add items to cart...
+                            </div>
+                        <?php } else { ?>
+                            <div class="container alert alert-info bg-white">
+                                <span class="fa fa-exclamation-triangle"></span> Add items to cart for them to display here
+                            </div>
+                        <?php } ?>
+                        
                     </div>
                 </div>
             </div>
@@ -207,29 +216,19 @@
             <?php include("include/footerinc.php"); ?>
             <?php
             exit();
-
-        } elseif ($check == 1) {
-            ?>
-            <style>
-                footer {
-                    position: fixed;
-                    right: 0;
-                    bottom: 0;
-                    left: 0;
-                    z-index: 1030
-                }
-            </style>
-            <?php include("include/footerinc.php");
         }
         
-        while($call = mysqli_fetch_assoc($get_cItems_sqli)) {
-
-            $id = $call['id'];
-
-            $get_Items_sqli = $connect->query("SELECT * FROM `items` WHERE `id` = '$id'");
-            $check = $get_Items_sqli->fetch_array();
+        while($call = $get_cItems_sqli->fetch_assoc()) {
 
             $itemID = $call['item_id'];
+            $countI = $call['item_count'];
+            $Tprice = $call['total_price'];
+            
+            $get_Items_sqli = $connect->query("SELECT * FROM `items` WHERE `id` = '$itemID'");
+
+            while($check = $get_Items_sqli->fetch_array()){
+
+            // $itemID = $call['item_id'];
             $pic = $check['item_pic'];
             $name = $check['item_name'];
             $details = $check['item_info'];
@@ -238,35 +237,33 @@
             // $size = $call['size'];
             $cSign = $check['currency'];
             $price = $check['price'];
-            $countI = $call ['item_count'];
-            $Tprice = $call['total_price'];
 
             // `colour` = '$colour' and `size` = '$size'
-            $get_IndItems = "SELECT `item_count` FROM `cart` WHERE `user_id` = '$uId'";
-            $get_IndItems_sqli = mysqli_query($connect, $get_IndItems);
-            $get = mysqli_fetch_assoc($get_IndItems_sqli);
-            $checkIndItems = $get['item_count'];
+            // $get_IndItems = "SELECT `item_count` FROM `cart` WHERE `user_id` = '$uId'";
+            // $get_IndItems_sqli = mysqli_query($connect, $get_IndItems);
+            // $get = mysqli_fetch_assoc($get_IndItems_sqli);
+            // $checkIndItems = $get['item_count'];
 
                     
-            if(@$_POST['minus_'. $id . '']) {
+            if(@$_POST['minus_'. $itemID . '']) {
                 # code...
-                $cart_check_sql = "SELECT `item_count`, `total_price` FROM `cart` WHERE `item_id` = '$itemID'";
-                $cart_check = mysqli_query($connect, $cart_check_sql);
-                $get = mysqli_fetch_array($cart_check);
-                $count = $get['item_count'];
-                $Tprice = $get['total_price'];
+                // $cart_check_sql = "SELECT `item_count`, `total_price` FROM `cart` WHERE `item_id` = '$itemID'";
+                // $cart_check = mysqli_query($connect, $cart_check_sql);
+                // $get = mysqli_fetch_array($cart_check);
+                // $countI = $get['item_count'];
+                // $Tprice = $get['total_price'];
 
-                $i = intval($count);
+                $i = intval($countI);
                 $i--;
                 $TCprice = intval($Tprice);
                 $Cprice = intval($price);
                             
-                if($TCprice == ($Cprice)){
+                if($TCprice == ($Cprice)) {
                     $remCart_sql = "DELETE FROM `cart` WHERE `item_id` = '$itemID'";
                     $remCart_sqli = mysqli_query($connect,$remCart_sql);
                     $errmsg = "
                         <div class='container alert alert-danger bg-light'>
-                            <span class='fa fa-warning'></span> Item Successfully removed from cart!!!
+                            <span class='fa fa-exclamation-triangle'></span> Item Successfully removed from cart!!! $count
                         </div>
                     ";
                     echo "<meta http-equiv =\"refresh\" content=\"1.5; url = cart\">";
@@ -278,13 +275,14 @@
                     $remCart_sqli = mysqli_query($connect, $remCart_sql);
                     $errmsg = "
                         <div class='container alert alert-warning bg-light'>
-                            <span class='fa fa-warning'></span> Item Successfully removed from cart!!!
+                            <span class='fa fa-exclamation-triangle'></span> Item Successfully removed from cart!!!
                         </div>
                     ";
                     echo "<meta http-equiv =\"refresh\" content=\"1.5; url = cart\">";
                 }
             }
-            if(@$_POST['plus_'. $id . '']) {
+
+            if(@$_POST['plus_'. $itemID . '']) {
                 # code...
                 $cart_check_sql = "SELECT `item_count`, `total_price` FROM `cart` WHERE `item_id` = '$itemID'";
                 $cart_check = mysqli_query($connect, $cart_check_sql);
@@ -301,26 +299,26 @@
                 $addCart_sqli = mysqli_query($connect, $addCart_sql);
                 $errmsg = "
                     <div class='container alert alert-success bg-light'>
-                        <span class='fa fa-warning'></span> Item Successfully Added!!!
+                        <span class='fa fa-exclamation-triangle'></span> Item Successfully Added!!!
                     </div>
                 ";
                 echo "<meta http-equiv =\"refresh\" content=\"1; url = cart\">";
             }
 
-            if(@$_POST['remCart_'. $id . '']) {
+            if(@$_POST['remCart_'. $itemID . '']) {
                 # code...
                 $remCart_sql = "DELETE FROM `cart` WHERE `item_id` = '$itemID'";
                 $remCart_sqli = mysqli_query($connect,$remCart_sql);
                 $errmsg = "
-                    <div class='container alert alert-warning bg-light'>
-                        <span class='fa fa-warning'></span> Item Successfully removed from cart!!!
+                    <div class='container alert alert-success bg-light'>
+                        <span class='fa fa-exclamation-triangle'></span> Item Successfully removed from cart!!!
                     </div>
                 ";
                 echo "<meta http-equiv =\"refresh\" content=\"2; url = cart\">";
             }
 
             if(@$_POST['view_'. $itemID . '']) {
-                echo "<meta http-equiv =\"refresh\" content=\"1; url = http://localhost/nice/preview?id=$itemID\">";
+                echo "<meta http-equiv =\"refresh\" content=\"1; url = preview?id=$itemID\">";
             }
                         
             if(@$_POST['contCheck']) {
@@ -329,16 +327,15 @@
                     # code...
                     $errmsg = "";
                     if($Ugender == "Male") {
-                        echo "<meta http-equiv =\"refresh\" content=\"1; url = http://localhost/nice/men\">";
-                    }
-                    else
-                    if($Ugender == "Female") {
+                        echo "<meta http-equiv =\"refresh\" content=\"1; url = men\">";
+
+                    } elseif($Ugender == "Female") {
                         # code...
-                        echo "<meta http-equiv =\"refresh\" content=\"1; url = http://localhost/nice/women\">";
+                        echo "<meta http-equiv =\"refresh\" content=\"1; url = women\">";
                     }
-                }
-                else{
-                    echo "<meta http-equiv =\"refresh\" content=\"1; url = http://localhost/nice/index\">";
+
+                } else{
+                    echo "<meta http-equiv =\"refresh\" content=\"1; url = index\">";
                 }
             }    
             ?>
@@ -349,21 +346,23 @@
                         <?php echo $errmsg; ?>
                         <!-- ========[ Top row: Item image, name, details & price ]======== -->
                         <div class="top row">
-                            <div class="img col-4">
-                                <a href="<?php echo $pic; ?>">
-                                    <img class="img-fluid" src="<?php echo $pic; ?>" style="width:100%" />
+                            <div class="cart-img col-4">
+                                <a href="<?php echo $pic; ?>" target="_blank">
+                                    <img class="img-fluid" src="<?php echo $pic; ?>" alt="<?php echo "$name"; ?>" title="<?php echo "$details"; ?>" style="width:100%" />
                                 </a>
                             </div>
                             <br /><br />
                             <div class="mt-md-5 col px-5">
-                                <a href="<?php echo "preview?id=$itemID"; ?>">
-                                    <div>
-                                        <h5 class="pb-2"><?php echo $name; ?></h5>
+                                <!-- <a href="<?php //echo "preview?id=$itemID"; ?>"> -->
+                                <div>
+                                    <a href="<?php echo "preview?id=$itemID"; ?>">
+                                        <span class="h5 pb-2"><?php echo $name; ?></span>
                                         <h6 style="line-height:0;"><?php echo $details; ?></h6><br />
-                                        <h5><i style="font-weight:300">KAL Express_<sup>_</sup></i> <span class="text-danger fa fa-fighter-jet"></span></h5>
+                                        <span class="h5"><i style="font-weight:300">KAL Express_<sup>_</sup></i> <span class="text-danger fa fa-fighter-jet"></span></span>
                                         <h5><b><?php echo $cSign.$price; ?></b></h5>
-                                    </div>
-                                </a>
+                                    </a>
+                                </div>
+                                <!-- </a> -->
                             </div>
                         </div>
                         <!-- ========[ End of Top row ]======== -->
@@ -373,20 +372,20 @@
                         <div class="down row">
                             <div class="text-center binborder pt-2 col-2">
                                 <form action="#" method="POST">
-                                    <button type="submit" class="fa fa-heart mr-1 bg-white btn btn-sm" name="<?php echo "addWish_$id"; ?>" value="wish"></button>
+                                    <button type="submit" class="mr-1 bg-white btn btn-sm" name="<?php echo "addWish_$itemID"; ?>" value="wish"><i class="far fa-heart"></i></button>
                                 </form>
                             </div>
                             <div class="mt-2 col-5 col-sm-7">
                                 <form action="#" method="POST">
-                                    <button type="submit" class="fas fa-trash-alt mr-1 bg-white btn btn-sm" name="<?php echo "remCart_$id"; ?>" value="remove"> <span class="trashtext" style="font-family:sans-serif">REMOVE</span></button>
+                                    <button type="submit" class="mr-1 bg-white btn btn-sm" name="<?php echo "remCart_$itemID"; ?>" value="remove"><i class="fas fa-trash-alt"></i> <span class="trashtext">REMOVE</span></button>
                                 </form>
                             </div>
                             <div class="text-right col-4 col-sm-3">
                                 <form action="#" method="POST" class="mt-sm-1">
                                     <span class="d-inline-flex">
-                                        <button type="submit" class="mr-1 rounded-circle bg-white btn btn-sm" name="<?php echo "minus_$id"; ?>" value="minus"><i class="fa fa-minus-circle"></i></button>
-                                        <i class="num mt-3"><?php echo $checkIndItems; ?><hr></i>
-                                        <button type="submit" class="ml-1 rounded-circle bg-white btn btn-sm" name="<?php echo "plus_$id"; ?>" value="plus"><i class="fa fa-plus-circle"></i></button>
+                                        <button type="submit" class="mr-1 rounded-circle bg-white btn btn-sm" name="<?php echo "minus_$itemID"; ?>" value="minus"><i class="fa fa-minus-circle"></i></button>
+                                        <i class="num mt-3"><?php echo $countI; ?><hr></i>
+                                        <button type="submit" class="ml-1 rounded-circle bg-white btn btn-sm" name="<?php echo "plus_$itemID"; ?>" value="plus"><i class="fa fa-plus-circle"></i></button>
                                     </span>
                                 </form>
                             </div>
@@ -396,7 +395,7 @@
                 </div>
             </div>
             <!-- ========[ End of cart item container ]======== -->  
-            <?php 
+        <?php }
         } 
     ?>
     <br />
@@ -430,6 +429,7 @@
             </div>
         </div>
     </div>
+    <br />
 </body>
 <!-- ========[ End of body ]======== -->
 

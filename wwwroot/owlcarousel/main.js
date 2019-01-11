@@ -101,7 +101,19 @@
         touchDrag: true,
     });
 
-    $('#owl-carousel-6').owlCarousel({
+    $('.custom1').owlCarousel({
+        animateOut: 'slideOutDown',
+        animateIn: 'flipInX',
+        loop: true,
+        items: 1,
+        margin: 30,
+        autoplay: true,
+        autoplayTimeout: 5000,
+        stagePadding: 30,
+        smartSpeed: 450
+    });
+
+    $('.owl-carousel-6').owlCarousel({
         loop: true,
         margin: 10,
         nav: true,
