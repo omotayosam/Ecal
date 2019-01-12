@@ -1,51 +1,10 @@
 <?php include("include/headerinc.php"); ?>
 <br />
 
-<!-- <script src="assets/form.js"></script> -->
-
 <!--[ Embedded Styling For Login Page ]-->
 <style>
-    .body{
-        margin: 0 auto 0 auto;
-        width: 100%
-    }
+    
 
-    .header{
-        color: grey
-    
-    }
-    
-    input[class="form-control"]{
-        border: none !important;
-        outline: none !important;
-        border-radius: 0;
-        border-bottom: solid 2px grey !important
-    }
-    
-    input[class="form-control"]:focus{
-        border: none !important;
-        outline: none !important;
-        border-bottom: solid 2.5px blue !important;
-        box-shadow: none !important;
-    }
-    
-    .signText a:link{
-        text-decoration: none
-    }
-    
-    .myinput-group-text{
-        display: -ms-flexbox;
-        display: flex;
-        -ms-flex-align: center;
-        align-items: center;
-        margin-bottom: 0;
-        font-size: 1rem;
-        font-weight: 400;
-        line-height: 1.5;
-        color: #495057;
-        text-align: center;
-        white-space: nowrap;
-    }
 </style>
 
 <?php
@@ -54,22 +13,23 @@
 
 	if($log) {
 		if(isset($_POST["user_login"]) && isset($_POST["password_login"])){
-			$user_login = $_POST["user_login"];// filter everything but members and letters
-			$password_login = preg_replace('#[^A-Za-z0-9]#i', '', $_POST["password_login"]);
-			$password_login_md5 = md5($password_login);
-			$query = $connect->query("SELECT * FROM `users` WHERE `email` = '$user_login' AND  `password` = '$password_login_md5' Limit 1");
+			$user_login = $_POST["user_login"];
+			$password_login = preg_replace('#[^A-Za-z0-9]#i', '', $_POST["password_login"]); ## filter everything but members and letters
+            $password_login_md5 = md5($password_login); ## Convert Password using md5 Hash
             
-            ##Check for number of rows where inputted email and password occur in the database
-            //Count number of rows returned
-            $userCount = $query->num_rows;
+            $password = "(`password` = '$password_login_md5')";
+            $phone_WO_dCode = "(`phone` = '+234 $user_login'))";
+            $email_phone_W_dCode = "((`email` = '{$user_login}' or `phone` = '{$user_login}')";
+
+			$query = $connect->query("SELECT * FROM `users` WHERE $email_phone_W_dCode OR $phone_WO_dCode AND $password Limit 1");
             
+            ## Check for number of rows where inputted email and password occur in the database
+            $userCount = $query->num_rows; ## Count number of rows returned
+
+            ## If number of rows returned = 1
 			if($userCount == 1) {
-				while($row = $query->fetch_array()){
-                    $id = $row["id"];
-                    $name = $row["last_name"];
-                    $email = $row["email"];
-				}
-				$_SESSION["user_login"] = $user_login; //Start a session using "user_login" --> Email
+
+				$_SESSION["user_login"] = $user_login; ## Start a session using "user_login" --> Email or Phone
                 
                 $err = '
                     <div class="alert alert-success">
@@ -96,7 +56,7 @@
     <?php }
 ?>
 
-<div class="body">
+<div class="login_body">
     <div class="container-fluid">
         <div class="">
             <div class="col-sm-10 offset-sm-1 offset-md-2 offset-lg-3 col-md-8 col-lg-6">
@@ -107,13 +67,12 @@
                 <form action="#" method="POST" class="needs-validation" validate>
                     <div class="row">
                         <div class="form col-12 mb-3">
-                            <label class="label" for="validationEmail">E-mail</label><br>
+                            <label class="label" for="validationEmail">User Login</label><br>
                             <div class="input-group">
-                                <span class="myinput-group-text"><i class="fa fa-envelope"></i></span>
-                                <input type="email" name="user_login" class="form-control" id="validationEmail" placeholder="name@example.com" required/>
-                                <div class="valid-feedback">Looks Good!</div>
+                                <span class="myinput-group-text"><i class="fa fa-user"></i></span>
+                                <input type="text" name="user_login" class="form-control" placeholder="Email or Phone" required/>
                             </div>
-                            <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+                            <small id="emailHelp" class="form-text text-muted">We'll never share your information with anyone else.</small>
                         </div>
                     </div>
                     <div class="row">
@@ -121,9 +80,9 @@
                             <label for="validationPassword">Password</label>
                             <div class="input-group">
                                 <span class="myinput-group-text"><i class="fa fa-unlock-alt"></i></span>
-                                <input type="password" name="password_login" class="form-control" id="validationPassword" placeholder="Password" required/>
+                                <input type="password" minlength="8" maxlength="32" name="password_login" class="form-control" placeholder="Password" required/>
                             </div>
-                            <small id="passwordHelp" class="form-text text-muted">Your Password must be 8-20 characters long!!!</small>
+                            <small id="passwordHelp" class="form-text text-muted">Your Password must be 8-32 characters long!!!</small>
                             <div class="">
                                 <div class="float-right">
                                     <a href="" class="nav-link"><span class="mr-2"><b>FORGOT PASSWORD?<b></span></a>
@@ -138,22 +97,24 @@
                             <span class="text-center">
                                 <h6>
                                     <div class="signText col-sm-12">
-                                        <b>New to Nice?</b> &nbsp;
+                                        <b>New to E-Kal?</b> &nbsp;
                                         <b><a href="signup">CREATE AN ACCOUNT</a></b>
                                     </div>
                                 </h6>
                             </span>
-                            <span id="logMess"><h6><?php echo $err; ?></h6></span>
+                            <div id="logMess" class="animated slideInDown"><h6><?php echo $err; ?></h6></div>
                         </span>
                     </div>
                 </form>
             </div>
         </div>
     </div>
-</div>
+
 <script type="text/javascript">
     $(document).ready(function () {
-        $('#logMess').delay(5800).fadeOut();
+        $('#logMess').delay(5800).slideUp();
     });
 </script>
-            
+
+<?php include "include/footerinc.php"; ?>
+</div>
