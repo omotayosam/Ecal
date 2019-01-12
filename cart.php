@@ -123,7 +123,7 @@
     
     /* Responsive */
     @media screen and (max-width: 600px){
-        .top .h5{
+        .top h5{
             font-size: 14px !important
         }
         .down button{
@@ -183,7 +183,7 @@
                                 <span class="fa fa-exclamation-triangle"></span> Add items to cart for them to display here
                             </div>
                         <?php } ?>
-                        
+					
                     </div>
                 </div>
             </div>
@@ -199,7 +199,7 @@
             <?php include("include/footerinc.php"); ?>
             <?php
             exit();
-        }
+       }
         
         while($call = $get_cItems_sqli->fetch_assoc()) {
 

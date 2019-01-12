@@ -29,34 +29,22 @@
     });
 
     // Owl Carousel
-    $('#owl-carousel-1').owlCarousel({
+
+
+    $('#owl-carousel-6').owlCarousel({
         loop: true,
-        margin: 0,
-        dots: false,
+        margin: 20,
         nav: true,
+        dots: false,
+        // navContainer: '#nav-carousel',
         navText: ['<i class="fa fa-angle-left"></i>', '<i class="fa fa-angle-right"></i>'],
         autoplay: true,
+        autoplayTimeout: 5000,
+        autoplayHoverPause: true,
+        touchDrag: true,
         responsive: {
             0: {
-                items: 1
-            },
-            992: {
                 items: 2
-            },
-        }
-    });
-
-    $('#owl-carousel-2').owlCarousel({
-        loop: false,
-        margin: 15,
-        dots: false,
-        nav: true,
-        navContainer: '#nav-carousel-2',
-        navText: ['<i class="fa fa-angle-left"></i>', '<i class="fa fa-angle-right"></i>'],
-        autoplay: false,
-        responsive: {
-            0: {
-                items: 1
             },
             768: {
                 items: 2
@@ -64,6 +52,9 @@
             992: {
                 items: 3
             },
+            1200: {
+                items: 4
+            }
         }
     });
 

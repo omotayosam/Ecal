@@ -1,4 +1,20 @@
 <?php include "include/headerinc.php"; ?>
+<?php
+$red_mess = '';
+if (!isset($_GET['next']) || !isset($_GET['page'])) {
+        # code...
+    $red_mess = 'Please Wait';
+}
+?>
+
+<div class="spn_hol">
+    <div class="text"><h5><?php echo $red_mess; ?></h5></div>
+    <div class="spinner">
+        <div class="bounce1"></div>
+        <div class="bounce2"></div>
+        <div class="bounce3"></div>
+    </div>
+</div>
 
 <?php
     $red_mess = '';
